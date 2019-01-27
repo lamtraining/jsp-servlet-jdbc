@@ -44,7 +44,7 @@
             <b class="arrow"></b>
             <ul class="submenu">
                 <li>
-                    <a href='<c:url value="/admin-new-list"/>'>
+                    <a href='<c:url value="/admin-new?page=1&maxPageItem=2&sortName=title&sortBy=desc"/>'>
                         <i class="menu-icon fa fa-caret-right"></i>
                         DS bài viết
                     </a>

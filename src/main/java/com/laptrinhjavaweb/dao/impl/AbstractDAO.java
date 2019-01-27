@@ -5,23 +5,25 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import com.laptrinhjavaweb.dao.GenericDAO;
 import com.laptrinhjavaweb.mapper.RowMapper;
-import com.mysql.cj.api.jdbc.Statement;
 
 public class AbstractDAO<T> implements GenericDAO<T> {
+
+	ResourceBundle resourceBundle = ResourceBundle.getBundle("db");
 	
 	public Connection getConnection() {
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			String url = "jdbc:mysql://localhost:3306/newservlet12month2018";
-			String user = "root";
-			String password = "1234";
+			Class.forName(resourceBundle.getString("driverName"));
+			String url = resourceBundle.getString("url");
+			String user = resourceBundle.getString("user");
+			String password = resourceBundle.getString("password");
 			return DriverManager.getConnection(url, user, password);
 		} catch (ClassNotFoundException | SQLException e) {
 			return null;
@@ -157,6 +159,40 @@ public class AbstractDAO<T> implements GenericDAO<T> {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public int count(String sql, Object... parameters) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		try {
+			int count = 0;
+			connection = getConnection();
+			statement = connection.prepareStatement(sql);
+			setParameter(statement, parameters);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				count = resultSet.getInt(1);
+			}
+			return count;
+		} catch (SQLException e) {
+			return 0;
+		} finally {
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+				if (resultSet != null) {
+					resultSet.close();
+				}
+			} catch (SQLException e) {
+				return 0;
+			}
+		}
 	}
 
 }

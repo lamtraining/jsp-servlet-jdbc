@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import com.laptrinhjavaweb.dao.INewDAO;
 import com.laptrinhjavaweb.model.NewModel;
+import com.laptrinhjavaweb.paging.Pageble;
 import com.laptrinhjavaweb.service.INewService;
 
 public class NewService implements INewService {
@@ -45,6 +46,16 @@ public class NewService implements INewService {
 			//2.delete news
 			newDao.delete(id);
 		}
+	}
+
+	@Override
+	public List<NewModel> findAll(Pageble pageble) {
+		return newDao.findAll(pageble);
+	}
+
+	@Override
+	public int getTotalItem() {
+		return newDao.getTotalItem();
 	}
 	
 }
