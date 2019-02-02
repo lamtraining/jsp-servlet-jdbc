@@ -21,6 +21,7 @@ public class AbstractModel<T> {
 	private String sortBy;
 	private String alert;
 	private String message;
+	private String type;
 	
 	public Long getId() {
 		return id;
@@ -115,5 +116,13 @@ public class AbstractModel<T> {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }
