@@ -78,8 +78,8 @@
                             <br/>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right">Nội dung</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="content" name="content" value="${model.content}"/>
+                                <div class="col-sm-9">                                 
+                                    <textarea rows="" cols="" id="content" name="content" style="width: 820px;height: 175px">${model.content}</textarea>
                                 </div>
                             </div>
                             <br/>
@@ -102,6 +102,11 @@
     </div>
 </div>
 <script>
+	var editor = '';
+	$(document).ready(function(){
+		editor = CKEDITOR.replace( 'content');
+	});
+	
     $('#btnAddOrUpdateNew').click(function (e) {
         e.preventDefault();
         var data = {};

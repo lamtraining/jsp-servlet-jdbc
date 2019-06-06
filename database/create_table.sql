@@ -1,4 +1,4 @@
-use newservlet12month2018;
+use jspservletjdbc;
 
 CREATE TABLE role(
   id bigint NOT NULL PRIMARY KEY auto_increment,
