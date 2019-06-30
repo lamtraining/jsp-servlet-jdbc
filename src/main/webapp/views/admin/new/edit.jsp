@@ -114,6 +114,7 @@
         $.each(formData, function (i, v) {
             data[""+v.name+""] = v.value;
         });
+        data["content"] = editor.getData();
         var id = $('#id').val();
         if (id == "") {
             addNew(data);
