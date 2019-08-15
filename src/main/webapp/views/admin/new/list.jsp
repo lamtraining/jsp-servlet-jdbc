@@ -1,4 +1,6 @@
 <%@include file="/common/taglib.jsp"%>
+<c:url var="APIurl" value="/api-admin-new"/>
+<c:url var ="NewURL" value="/admin-new"/>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 	<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -53,6 +55,7 @@
 											<table class="table table-bordered">
 												<thead>
 													<tr>
+														<th><input type="checkbox" id="checkAll"></th>
 														<th>Tên bài viết</th>
 														<th>Mô tả ngắn</th>
 														<th>Thao tác</th>
@@ -61,6 +64,7 @@
 												<tbody>
 													<c:forEach var="item" items="${model.listResult}">
 														<tr>
+															<td><input type="checkbox" id="checkbox_${item.id}" value="${item.id}"></td>
 															<td>${item.title}</td>
 															<td>${item.shortDescription}</td>
 															<td>
@@ -113,6 +117,30 @@
 					}
 				});
 			});
+			
+			$("#btnDelete").click(function() {
+				var data = {};
+				var ids = $('tbody input[type=checkbox]:checked').map(function () {
+		            return $(this).val();
+		        }).get();
+				data['ids'] = ids;
+				deleteNew(data);
+			});
+			
+			function deleteNew(data) {
+		        $.ajax({
+		            url: '${APIurl}',
+		            type: 'DELETE',
+		            contentType: 'application/json',
+		            data: JSON.stringify(data),
+		            success: function (result) {
+		                window.location.href = "${NewURL}?type=list&maxPageItem=2&page=1";
+		            },
+		            error: function (error) {
+		                console.log(error);
+		            }
+		        });
+		    }
 		</script>
 	</body>
 
