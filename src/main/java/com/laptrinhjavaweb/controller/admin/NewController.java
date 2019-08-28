@@ -18,6 +18,7 @@ import com.laptrinhjavaweb.service.ICategoryService;
 import com.laptrinhjavaweb.service.INewService;
 import com.laptrinhjavaweb.sort.Sorter;
 import com.laptrinhjavaweb.utils.FormUtil;
+import com.laptrinhjavaweb.utils.MessageUtil;
 
 @WebServlet(urlPatterns = {"/admin-new"})
 public class NewController extends HttpServlet {
@@ -43,12 +44,11 @@ public class NewController extends HttpServlet {
 		} else if (model.getType().equals(SystemConstant.EDIT)) {
 			if (model.getId() != null) {
 				model = newService.findOne(model.getId());
-			} else {
-
 			}
 			request.setAttribute("categories", categoryService.findAll());
 			view = "/views/admin/new/edit.jsp";
 		}
+		MessageUtil.showMessage(request);
 		request.setAttribute(SystemConstant.MODEL, model);
 		RequestDispatcher rd = request.getRequestDispatcher(view);
 		rd.forward(request, response);
